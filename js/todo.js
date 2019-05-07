@@ -34,8 +34,7 @@ function updateTodo(id, completed) {
 
 function loadTodos() {
   $.ajax({
-    url: 'http://localhost:3000/todos',
-    // url: 'https://tuapp.herokuapp.com/todos',
+    url: 'https://exfinala01281649.herokuapp.com/todos',
     headers: {
         'Content-Type':'application/json',
         'Authorization': 'Bearer ' + token
@@ -43,14 +42,14 @@ function loadTodos() {
     method: 'GET',
     dataType: 'json',
     success: function(data){
-      console.log(data)
-
+      var new_html = "";
       for( let i = 0; i < data.length; i++) {
         // aqui va su código para agregar los elementos de la lista
-        console.log(data[i].description)
-        // algo asi:
-        // addTodo(data[i]._id, data[i].description, data[i].completed)
+        new_html += `
+        <li><input type="checkbox" name="todo" value=${i}><span>${data[i].description}</span></li>
+        `
       }
+      $("#unfinished-list").append(new_html);
     },
     error: function(error_msg) {
       alert((error_msg['responseText']));
@@ -78,7 +77,7 @@ input.addEventListener('keypress', function (event) {
     };
     json_to_send = JSON.stringify(json_to_send);
     $.ajax({
-      url: 'http://localhost:3000/todos',
+      url: 'https://exfinala01281649.herokuapp.com/todos',
       // url: 'https://tuapp.herokuapp.com/todos',
       headers: {
           'Content-Type':'application/json',
@@ -88,7 +87,7 @@ input.addEventListener('keypress', function (event) {
       dataType: 'json',
       data: json_to_send,
       success: function(data){
-        console.log(data)
+        loadTodos;
         
       },
       error: function(error_msg) {
